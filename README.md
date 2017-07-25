@@ -1,2 +1,2 @@
 # summercamp
- 6/5000 Shēngchǎn guǎnlǐ xìtǒng Production management system
+ 6/5000  Production management system
