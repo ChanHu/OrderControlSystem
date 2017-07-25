@@ -1,0 +1,242 @@
+drop table if exists Customer;
+
+drop table if exists Material;
+
+drop table if exists OrderOfMaterialinput;
+
+drop table if exists OrderOfProductoutput;
+
+drop table if exists Produce;
+
+drop table if exists Product;
+
+drop table if exists ProductType;
+
+drop table if exists Productform;
+
+drop table if exists StockInput;
+
+drop table if exists StockOfMaterial;
+
+drop table if exists StockOfProduct;
+
+drop table if exists StockOutput;
+
+drop table if exists Supplier;
+
+drop table if exists admin;
+
+/*==============================================================*/
+/* Table: Customer                                              */
+/*==============================================================*/
+create table Customer
+(
+   CustomerID           char(100) not null,
+   CustomerName         char(100),
+   CustomerAddresss     char(100),
+   CustomerContacts     char(100),
+   CustomerPhone        char(20),
+   primary key (CustomerID)
+);
+
+/*==============================================================*/
+/* Table: Material                                              */
+/*==============================================================*/
+create table Material
+(
+   MaterialId           char(100) not null,
+   SupplierID           char(100),
+   MaterialName         char(100),
+   MaterialGuidePrice   char(100),
+   MaterialIntroduction text,
+   primary key (MaterialId)
+);
+
+/*==============================================================*/
+/* Table: OrderOfMaterialinput                                  */
+/*==============================================================*/
+create table OrderOfMaterialinput
+(
+   MaterialId           char(100) not null,
+   SupplierID           char(100) not null,
+   OrderOfMaterialinputID char(100),
+   InputCount           char(100),
+   InputPrice           char(100),
+   InputDate            date,
+   primary key (MaterialId, SupplierID)
+);
+
+/*==============================================================*/
+/* Table: OrderOfProductoutput                                  */
+/*==============================================================*/
+create table OrderOfProductoutput
+(
+   ProductId            char(100) not null,
+   CustomerID           char(100) not null,
+   OrderOfOPID          char(100),
+   OutputCount          char(100),
+   OutputDate           date,
+   OutputPrice          char(100),
+   primary key (ProductId, CustomerID)
+);
+
+/*==============================================================*/
+/* Table: Produce                                               */
+/*==============================================================*/
+create table Produce
+(
+   MaterialId           char(100) not null,
+   ProductId            char(100) not null,
+   ProduceId            char(100),
+   ProduceDate          char(100),
+   ProduceProductCount  char(100),
+   primary key (MaterialId, ProductId)
+);
+
+/*==============================================================*/
+/* Table: Product                                               */
+/*==============================================================*/
+create table Product
+(
+   ProductId            char(100) not null,
+   ProductTypeID        char(100),
+   ProductName          char(100),
+   ProductPrice         char(100),
+   ProductIntroduction  text,
+   primary key (ProductId)
+);
+
+/*==============================================================*/
+/* Table: ProductType                                           */
+/*==============================================================*/
+create table ProductType
+(
+   ProductTypeID        char(100) not null,
+   ProductTypeName      char(100),
+   ProductTypeIntroduction text,
+   primary key (ProductTypeID)
+);
+
+/*==============================================================*/
+/* Table: Productform                                           */
+/*==============================================================*/
+create table Productform
+(
+   ProductId            char(100) not null,
+   MaterialId           char(100) not null,
+   Materialcount        char(10),
+   primary key (ProductId, MaterialId)
+);
+
+/*==============================================================*/
+/* Table: StockInput                                            */
+/*==============================================================*/
+create table StockInput
+(
+   MaterialId           char(100),
+   StockInputID         char(100),
+   StockInputDate       date,
+   StockInputCount      char(100)
+);
+
+/*==============================================================*/
+/* Table: StockOfMaterial                                       */
+/*==============================================================*/
+create table StockOfMaterial
+(
+   StockOfMaterialId    char(100) not null,
+   MaterialId           char(100),
+   StockOfMaterialCount char(100),
+   StockOfMaterialAddress char(100),
+   primary key (StockOfMaterialId)
+);
+
+/*==============================================================*/
+/* Table: StockOfProduct                                        */
+/*==============================================================*/
+create table StockOfProduct
+(
+   StockOfProductID     char(100) not null,
+   ProductId            char(100),
+   StockOfProductCount  char(100),
+   StockOfProductAddress char(100),
+   primary key (StockOfProductID)
+);
+
+/*==============================================================*/
+/* Table: StockOutput                                           */
+/*==============================================================*/
+create table StockOutput
+(
+   ProductId            char(100),
+   StockOutputID        char(100),
+   StockOutputDate      date,
+   StockOutputCount     char(100)
+);
+
+/*==============================================================*/
+/* Table: Supplier                                              */
+/*==============================================================*/
+create table Supplier
+(
+   SupplierID           char(100) not null,
+   SupplierName         char(100),
+   SupplierAddress      char(100),
+   SupplierContacts     char(100),
+   SupplierPhone        char(20),
+   SupplierBriefIntroduction text,
+   primary key (SupplierID)
+);
+
+/*==============================================================*/
+/* Table: admin                                                 */
+/*==============================================================*/
+create table admin
+(
+   adminID              char(100) not null,
+   adminName            char(100),
+   adminPasswd          char(100),
+   primary key (adminID)
+);
+
+alter table Material add constraint FK_SupplierProvideMaterial foreign key (SupplierID)
+      references Supplier (SupplierID) on delete restrict on update restrict;
+
+alter table OrderOfMaterialinput add constraint FK_OrderOfMaterialinput foreign key (MaterialId)
+      references Material (MaterialId) on delete restrict on update restrict;
+
+alter table OrderOfMaterialinput add constraint FK_OrderOfMaterialinput2 foreign key (SupplierID)
+      references Supplier (SupplierID) on delete restrict on update restrict;
+
+alter table OrderOfProductoutput add constraint FK_OrderOfProductoutput foreign key (ProductId)
+      references Product (ProductId) on delete restrict on update restrict;
+
+alter table OrderOfProductoutput add constraint FK_OrderOfProductoutput2 foreign key (CustomerID)
+      references Customer (CustomerID) on delete restrict on update restrict;
+
+alter table Produce add constraint FK_Produce foreign key (MaterialId)
+      references Material (MaterialId) on delete restrict on update restrict;
+
+alter table Produce add constraint FK_Produce2 foreign key (ProductId)
+      references Product (ProductId) on delete restrict on update restrict;
+
+alter table Product add constraint FK_ProductHasType foreign key (ProductTypeID)
+      references ProductType (ProductTypeID) on delete restrict on update restrict;
+
+alter table Productform add constraint FK_Productform foreign key (ProductId)
+      references Product (ProductId) on delete restrict on update restrict;
+
+alter table Productform add constraint FK_Productform2 foreign key (MaterialId)
+      references Material (MaterialId) on delete restrict on update restrict;
+
+alter table StockInput add constraint FK_MaterialInputTOStock foreign key (MaterialId)
+      references Material (MaterialId) on delete restrict on update restrict;
+
+alter table StockOfMaterial add constraint FK_MaterialStock foreign key (MaterialId)
+      references Material (MaterialId) on delete restrict on update restrict;
+
+alter table StockOfProduct add constraint FK_ProductStock foreign key (ProductId)
+      references Product (ProductId) on delete restrict on update restrict;
+
+alter table StockOutput add constraint FK_ProductoutputFromStock foreign key (ProductId)
+      references Product (ProductId) on delete restrict on update restrict;
