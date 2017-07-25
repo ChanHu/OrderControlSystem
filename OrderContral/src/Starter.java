@@ -20,7 +20,7 @@ public class Starter {
 			System.out.println("connected!");
 		} catch (SQLException e) {
 			System.out.println("connect failed!");
-			e.printStackTrace();
+			e.printStackTrace();	
 		}
 		finally{
 			if(conn!=null)

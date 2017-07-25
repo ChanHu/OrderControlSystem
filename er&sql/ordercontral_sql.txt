@@ -2,6 +2,8 @@ drop table if exists Customer;
 
 drop table if exists Material;
 
+drop index MaterialInputTOStock_FK on OrderOfMaterialinput;
+
 drop table if exists OrderOfMaterialinput;
 
 drop table if exists OrderOfProductoutput;
@@ -57,13 +59,20 @@ create table Material
 /*==============================================================*/
 create table OrderOfMaterialinput
 (
-   MaterialId           char(100) not null,
-   SupplierID           char(100) not null,
-   OrderOfMaterialinputID char(100),
+   OrderOfMaterialinputID char(100) not null,
+   MaterialId           char(100),
    InputCount           char(100),
    InputPrice           char(100),
    InputDate            date,
-   primary key (MaterialId, SupplierID)
+   primary key (OrderOfMaterialinputID)
+);
+
+/*==============================================================*/
+/* Index: MaterialInputTOStock_FK                               */
+/*==============================================================*/
+create index MaterialInputTOStock_FK on OrderOfMaterialinput
+(
+   OrderOfMaterialinputID
 );
 
 /*==============================================================*/
@@ -85,12 +94,11 @@ create table OrderOfProductoutput
 /*==============================================================*/
 create table Produce
 (
-   MaterialId           char(100) not null,
-   ProductId            char(100) not null,
-   ProduceId            char(100),
-   ProduceDate          char(100),
-   ProduceProductCount  char(100),
-   primary key (MaterialId, ProductId)
+   ProduceId            char(100) not null,
+   ProductId            char(100),
+   ProduceDate          date,
+   ProduceCount         char(100),
+   primary key (ProduceId)
 );
 
 /*==============================================================*/
@@ -202,11 +210,8 @@ create table admin
 alter table Material add constraint FK_SupplierProvideMaterial foreign key (SupplierID)
       references Supplier (SupplierID) on delete restrict on update restrict;
 
-alter table OrderOfMaterialinput add constraint FK_OrderOfMaterialinput foreign key (MaterialId)
+alter table OrderOfMaterialinput add constraint FK_Reference_12 foreign key (MaterialId)
       references Material (MaterialId) on delete restrict on update restrict;
-
-alter table OrderOfMaterialinput add constraint FK_OrderOfMaterialinput2 foreign key (SupplierID)
-      references Supplier (SupplierID) on delete restrict on update restrict;
 
 alter table OrderOfProductoutput add constraint FK_OrderOfProductoutput foreign key (ProductId)
       references Product (ProductId) on delete restrict on update restrict;
@@ -214,10 +219,7 @@ alter table OrderOfProductoutput add constraint FK_OrderOfProductoutput foreign 
 alter table OrderOfProductoutput add constraint FK_OrderOfProductoutput2 foreign key (CustomerID)
       references Customer (CustomerID) on delete restrict on update restrict;
 
-alter table Produce add constraint FK_Produce foreign key (MaterialId)
-      references Material (MaterialId) on delete restrict on update restrict;
-
-alter table Produce add constraint FK_Produce2 foreign key (ProductId)
+alter table Produce add constraint FK_ProduceProduct foreign key (ProductId)
       references Product (ProductId) on delete restrict on update restrict;
 
 alter table Product add constraint FK_ProductHasType foreign key (ProductTypeID)

@@ -3,20 +3,25 @@ package cn.edu.zucc.ordercontrol.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 import cn.edu.zucc.ordercontrol.dao.MaterialDao;
@@ -30,9 +35,6 @@ public class FrmMain2 extends JFrame implements ActionListener {
     static final int HEIGHT=800;
     String flag=null;
 	private JMenuBar menubar=new JMenuBar(); 
-	
-	
-	
 	
     private JButton Button_Supplier=new JButton("厂商管理");
     private JButton Button_Material=new JButton("材料管理");
@@ -52,7 +54,7 @@ public class FrmMain2 extends JFrame implements ActionListener {
     JButton button_Function_modify=new JButton("修改");
     JButton button_Function_delete=new JButton("删除");
     JButton button_Function_search=new JButton("查询");
-    JTextField text1=new JTextField();
+    JTextArea text1=new JTextArea();
  
 //	private JPanel statusBar = new JPanel();
     
@@ -74,7 +76,13 @@ public class FrmMain2 extends JFrame implements ActionListener {
 	DefaultTableModel tablmod=new DefaultTableModel();
 	private JTable dataTable=new JTable(tablmod);
 	
-	private void reloadSupplierTable() throws BaseException{
+	
+
+	
+	
+	
+	
+	void reloadSupplierTable() throws BaseException{
 		pubs=(new SupplierDao()).loadall();
 		tblData =new Object[pubs.size()][6];
 		for(int i=0;i<pubs.size();i++){
@@ -91,10 +99,10 @@ public class FrmMain2 extends JFrame implements ActionListener {
 	}
     
     
-	private void reloadMaterialTable() throws BaseException{
+	 void reloadMaterialTable() throws BaseException{
 		pubsOfMaterial=(new MaterialDao()).loadall();
-		tblData =new Object[pubs.size()][5];
-		for(int i=0;i<pubs.size();i++){
+		tblData =new Object[pubsOfMaterial.size()][5];
+		for(int i=0;i<pubsOfMaterial.size();i++){
 			tblData[i][0]=pubsOfMaterial.get(i).getMaterialId()+"";
 			tblData[i][1]=pubsOfMaterial.get(i).getSupplierID();
 			tblData[i][2]=pubsOfMaterial.get(i).getMaterialName();
@@ -116,6 +124,7 @@ public class FrmMain2 extends JFrame implements ActionListener {
     
 	public FrmMain2(){
 		JFrame jf=new JFrame("生产管理系统");
+		
         jf.setSize(WIDTH,HEIGHT);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置其顶层容器的关闭性
 
@@ -127,8 +136,12 @@ public class FrmMain2 extends JFrame implements ActionListener {
         int y=(height-HEIGHT)/2;
         jf.setLocation(x,y);
         
-        
-        
+        ImageIcon icon=new ImageIcon("src/model/1.png");
+        JLabel label=new JLabel(icon);  
+        label.setBounds(0,0,icon.getIconWidth(),icon.getIconHeight());
+        jf.getLayeredPane().add(label,new Integer(Integer.MIN_VALUE));  
+        JPanel j=(JPanel)jf.getContentPane();  
+        j.setOpaque(false); 
         
         
         
@@ -136,9 +149,8 @@ public class FrmMain2 extends JFrame implements ActionListener {
         contentPane.setLayout(new FlowLayout());
         JPanel p1=new JPanel();
         jf.setContentPane(contentPane);
-		
-		
-		
+        
+		p1.setOpaque(false);
         //contentPane.setLayout(new GridLayout(0, 1)); // 设置为网格布局，未指定行数
 		//setFont(new Font("Helvetica", Font.PLAIN, 18));
         contentPane.setLayout(new BorderLayout());
@@ -163,7 +175,7 @@ public class FrmMain2 extends JFrame implements ActionListener {
 		
 		
 		JPanel p2=new JPanel();
-
+		p2.setOpaque(false);
 		p2.add(button_Function_add);
 		p2.add(button_Function_delete);
 		p2.add(button_Function_modify);
@@ -173,7 +185,12 @@ public class FrmMain2 extends JFrame implements ActionListener {
 		contentPane.add(p2,"South");
 		
 		//this.getContentPane().add(new JScrollPane(this.dataTable), BorderLayout.CENTER);
-		contentPane.add(new JScrollPane(dataTable),"Center");
+		JPanel p3=new JPanel();
+		JScrollPane aJScrollPane=new JScrollPane(dataTable);
+		aJScrollPane.setOpaque(false);
+		p3.add(aJScrollPane);
+		p3.setOpaque(false);
+		contentPane.add(p3,"Center");
 		
 		
 		Button_Supplier.addActionListener(this);
@@ -192,10 +209,39 @@ public class FrmMain2 extends JFrame implements ActionListener {
 		button_Function_modify.addActionListener(this);
 		button_Function_search.addActionListener(this);
 		
+		 this.dataTable.addMouseListener(new MouseAdapter (){
+
+				public void mouseClicked(MouseEvent e) {
+					int i=FrmMain2.this.dataTable.getSelectedRow();
+					if(i<0) {
+						return;
+					}
+					int j=FrmMain2.this.dataTable.getSelectedColumn();
+					j++;
+					if(j==FrmMain2.this.dataTable.getColumnCount())
+					{
+						JFrame jf222=new JFrame("详情");
+				        jf222.setSize(300,300);
+				        JPanel contentPane222=new JPanel();
+				        contentPane222.setLayout(new FlowLayout());
+				        JPanel p111=new JPanel();
+				        jf222.setContentPane(contentPane222);
+				        TextArea brief222 = new TextArea(5,28);				        
+				        brief222.setText(tblData[i][j-1].toString());
+				        p111.add(brief222);
+				        contentPane222.add(p111, "North");
+				        jf222.setVisible(true);
+					}
+					//zhanshi
+					//System.out.println(i);
+					
+				}
+		    	
+		  });
 		
 		
 		
-		
+		contentPane.setOpaque(false);
 		jf.setVisible(true);
 	}
 	@Override
@@ -238,6 +284,8 @@ public class FrmMain2 extends JFrame implements ActionListener {
 			flag="Stock";
 		}else if(e.getSource()==this.button_Function_add){
 			if(flag.equals("Supplier")){
+				FrmSupplierAdd aFrmSupplier=new FrmSupplierAdd(this,"增加供货商",true);
+				aFrmSupplier.setVisible(true);
 				
 			}else if(flag.equals("Material")){
 				
@@ -259,7 +307,14 @@ public class FrmMain2 extends JFrame implements ActionListener {
 			
 		}else if(e.getSource()==this.button_Function_delete){
 			if(flag.equals("Supplier")){
-				
+				int i=FrmMain2.this.dataTable.getSelectedRow();
+				(new SupplierDao()).deleteSupplier(pubs.get(i));
+				try {
+					reloadSupplierTable();
+				} catch (BaseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}else if(flag.equals("Material")){
 				
 			}else if(flag.equals("ProductInfo")){
@@ -279,6 +334,9 @@ public class FrmMain2 extends JFrame implements ActionListener {
 			}
 		}else if(e.getSource()==this.button_Function_modify){
 			if(flag.equals("Supplier")){
+				int i=FrmMain2.this.dataTable.getSelectedRow();
+				FrmSupplierModify aFrmSupplierModify =new FrmSupplierModify(this,"供货商修改",true,pubs.get(i));
+				aFrmSupplierModify.setVisible(true);
 				
 			}else if(flag.equals("Material")){
 				

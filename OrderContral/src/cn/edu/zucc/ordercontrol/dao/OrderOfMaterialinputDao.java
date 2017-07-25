@@ -23,12 +23,11 @@ public class OrderOfMaterialinputDao implements IOrderOfMaterialinputDao{
 			if(rSet.next())
 			{
 				aOrderOfMaterialinput=new OrderOfMaterialinput();
-				aOrderOfMaterialinput.setMaterialId(rSet.getString(1));
-				aOrderOfMaterialinput.setSupplierID(rSet.getString(2));
-				aOrderOfMaterialinput.setOrderOfMaterialinputID(rSet.getString(3));
-				aOrderOfMaterialinput.setInputCount(rSet.getString(4));
-				aOrderOfMaterialinput.setInputPrice(rSet.getString(5));
-				aOrderOfMaterialinput.setInputDate(rSet.getDate(6));
+				aOrderOfMaterialinput.setOrderOfMaterialinputID(rSet.getString(1));			
+				aOrderOfMaterialinput.setMaterialId(rSet.getString(2));
+				aOrderOfMaterialinput.setInputCount(rSet.getString(3));
+				aOrderOfMaterialinput.setInputPrice(rSet.getString(4));
+				aOrderOfMaterialinput.setInputDate(rSet.getDate(5));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -52,12 +51,11 @@ public class OrderOfMaterialinputDao implements IOrderOfMaterialinputDao{
 			{
 				OrderOfMaterialinput aOrderOfMaterialinput=new OrderOfMaterialinput();
 				aOrderOfMaterialinput=new OrderOfMaterialinput();
-				aOrderOfMaterialinput.setMaterialId(rSet.getString(1));
-				aOrderOfMaterialinput.setSupplierID(rSet.getString(2));
-				aOrderOfMaterialinput.setOrderOfMaterialinputID(rSet.getString(3));
-				aOrderOfMaterialinput.setInputCount(rSet.getString(4));
-				aOrderOfMaterialinput.setInputPrice(rSet.getString(5));
-				aOrderOfMaterialinput.setInputDate(rSet.getDate(6));
+				aOrderOfMaterialinput.setOrderOfMaterialinputID(rSet.getString(1));			
+				aOrderOfMaterialinput.setMaterialId(rSet.getString(2));
+				aOrderOfMaterialinput.setInputCount(rSet.getString(3));
+				aOrderOfMaterialinput.setInputPrice(rSet.getString(4));
+				aOrderOfMaterialinput.setInputDate(rSet.getDate(5));
 			rst.add(aOrderOfMaterialinput);
 			}
 		} catch (SQLException e) {
@@ -75,14 +73,13 @@ public class OrderOfMaterialinputDao implements IOrderOfMaterialinputDao{
 		boolean f=false;
 		try {
 			connection=DBUtil.getConnection();
-			String sql="insert into OrderOfMaterialinput values(?,?,?,?,?,?)";
+			String sql="insert into OrderOfMaterialinput values(?,?,?,?,?)";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
-			pStatement.setString(1, OrderOfMaterialinput.getMaterialId());
-			pStatement.setString(2, OrderOfMaterialinput.getSupplierID());
-			pStatement.setString(3, OrderOfMaterialinput.getOrderOfMaterialinputID());
-			pStatement.setString(4, OrderOfMaterialinput.getInputCount());
-			pStatement.setString(5, OrderOfMaterialinput.getInputPrice());
-			pStatement.setDate(6, OrderOfMaterialinput.getInputDate());
+			pStatement.setString(1, OrderOfMaterialinput.getOrderOfMaterialinputID());
+			pStatement.setString(2, OrderOfMaterialinput.getMaterialId());	
+			pStatement.setString(3, OrderOfMaterialinput.getInputCount());
+			pStatement.setString(4, OrderOfMaterialinput.getInputPrice());
+			pStatement.setDate(5, OrderOfMaterialinput.getInputDate());
 			f=pStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -115,15 +112,14 @@ public class OrderOfMaterialinputDao implements IOrderOfMaterialinputDao{
 		
 		try {
 			connection=DBUtil.getConnection();
-			String sql="update OrderOfMaterialinput set MaterialId=?,SupplierID=?, OrderOfMaterialinputID=?, InputCount=?, InputPrice=?, InputDate=? where OrderOfMaterialinputID =? ";
+			String sql="update OrderOfMaterialinput set  OrderOfMaterialinputID=?,MaterialId=?, InputCount=?, InputPrice=?, InputDate=? where OrderOfMaterialinputID =? ";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
-			pStatement.setString(1, OrderOfMaterialinput.getMaterialId());
-			pStatement.setString(2, OrderOfMaterialinput.getSupplierID());
-			pStatement.setString(3, OrderOfMaterialinput.getOrderOfMaterialinputID());
-			pStatement.setString(4, OrderOfMaterialinput.getInputCount());
-			pStatement.setString(5, OrderOfMaterialinput.getInputPrice());
-			pStatement.setDate(6, OrderOfMaterialinput.getInputDate());
-			pStatement.setString(7, OrderOfMaterialinput.getMaterialId());
+			pStatement.setString(1, OrderOfMaterialinput.getOrderOfMaterialinputID());
+			pStatement.setString(2, OrderOfMaterialinput.getMaterialId());	
+			pStatement.setString(3, OrderOfMaterialinput.getInputCount());
+			pStatement.setString(4, OrderOfMaterialinput.getInputPrice());
+			pStatement.setDate(5, OrderOfMaterialinput.getInputDate());
+			pStatement.setString(6, OrderOfMaterialinput.getOrderOfMaterialinputID());
 			f=pStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -158,12 +154,11 @@ public class OrderOfMaterialinputDao implements IOrderOfMaterialinputDao{
 			{
 				OrderOfMaterialinput aOrderOfMaterialinput=new OrderOfMaterialinput();
 				aOrderOfMaterialinput=new OrderOfMaterialinput();
-				aOrderOfMaterialinput.setMaterialId(rSet.getString(1));
-				aOrderOfMaterialinput.setSupplierID(rSet.getString(2));
-				aOrderOfMaterialinput.setOrderOfMaterialinputID(rSet.getString(3));
-				aOrderOfMaterialinput.setInputCount(rSet.getString(4));
-				aOrderOfMaterialinput.setInputPrice(rSet.getString(5));
-				aOrderOfMaterialinput.setInputDate(rSet.getDate(6));
+				aOrderOfMaterialinput.setOrderOfMaterialinputID(rSet.getString(1));			
+				aOrderOfMaterialinput.setMaterialId(rSet.getString(2));
+				aOrderOfMaterialinput.setInputCount(rSet.getString(3));
+				aOrderOfMaterialinput.setInputPrice(rSet.getString(4));
+				aOrderOfMaterialinput.setInputDate(rSet.getDate(5));
 			rst.add(aOrderOfMaterialinput);
 			}
 		} catch (SQLException e) {

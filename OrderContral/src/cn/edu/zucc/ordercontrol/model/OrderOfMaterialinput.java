@@ -3,9 +3,8 @@ package cn.edu.zucc.ordercontrol.model;
 import java.sql.Date;
 
 public class OrderOfMaterialinput {
-	private String MaterialId;
-	private String SupplierID;
 	private String OrderOfMaterialinputID;
+	private String MaterialId;
 	private String InputCount;
 	private String InputPrice;
 	private Date InputDate;
@@ -15,12 +14,7 @@ public class OrderOfMaterialinput {
 	public void setMaterialId(String materialId) {
 		MaterialId = materialId;
 	}
-	public String getSupplierID() {
-		return SupplierID;
-	}
-	public void setSupplierID(String supplierID) {
-		SupplierID = supplierID;
-	}
+
 	public String getOrderOfMaterialinputID() {
 		return OrderOfMaterialinputID;
 	}
