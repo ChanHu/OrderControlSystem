@@ -19,6 +19,7 @@ public class ProductDao implements IProductDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from Product where ProductId=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, ProductID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{

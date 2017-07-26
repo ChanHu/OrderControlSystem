@@ -19,6 +19,7 @@ public class MaterialDao implements IMaterialDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from Material where Materialid=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, MaterialID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{
@@ -81,6 +82,7 @@ public class MaterialDao implements IMaterialDao{
 			pStatement.setString(4, Material.getMaterialGuidePrice());
 			pStatement.setString(5, Material.getMaterialIntroduction());
 			f=pStatement.execute();
+			f=true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -168,4 +170,9 @@ public class MaterialDao implements IMaterialDao{
 		
 		return rst;
 	}
+
+
+
+
+
 }	

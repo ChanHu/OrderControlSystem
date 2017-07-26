@@ -19,6 +19,7 @@ public class OrderOfProductoutputDao implements IOrderOfProductoutputDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from OrderOfProductoutput where OrderOfProductoutputid=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, OrderOfProductoutputID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{

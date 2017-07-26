@@ -19,6 +19,7 @@ public class SupplierDao implements ISupplierDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from Supplier where Supplierid=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, SupplierID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{
@@ -83,6 +84,7 @@ public class SupplierDao implements ISupplierDao{
 			pStatement.setString(5, Supplier.getSupplierPhone());
 			pStatement.setString(6, Supplier.getSupplierBriefIntroduction());
 			f=pStatement.execute();
+			f=true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,13 +142,13 @@ public class SupplierDao implements ISupplierDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from Supplier where Suppliername like ? or Supplieraddress like ?";
 			PreparedStatement ps=connection.prepareStatement(sql);
-			if(Suppliername!=null)
+			if(Suppliername!=null&&!Suppliername.equals(""))
 			{
 				ps.setString(1, "%"+Suppliername+"%");
 			} else {
 				ps.setString(1, "");
 			}
-			if(Supplieraddress!=null)
+			if(Supplieraddress!=null&&!Supplieraddress.equals(""))
 			{
 				ps.setString(2, "%"+Supplieraddress+"%");
 			} else {			

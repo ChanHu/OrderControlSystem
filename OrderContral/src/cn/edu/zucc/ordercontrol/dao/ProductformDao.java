@@ -19,6 +19,7 @@ public class ProductformDao implements IProductformDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from Productform where ProductId=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, ProductformID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{

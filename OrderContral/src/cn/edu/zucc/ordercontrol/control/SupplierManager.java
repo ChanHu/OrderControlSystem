@@ -21,6 +21,11 @@ public class SupplierManager {
 			throw new BusinessException("supplier id is null");
 		}
 		
+		//check exist
+		if(search(supplier)!=null){
+			throw new BusinessException("supplies id has existed");
+		}
+		
 		 if(aDao.CreateSupplier(supplier))//create
 		 {
 			//ok

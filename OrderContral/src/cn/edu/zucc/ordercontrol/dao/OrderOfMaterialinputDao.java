@@ -19,6 +19,7 @@ public class OrderOfMaterialinputDao implements IOrderOfMaterialinputDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from OrderOfMaterialinput where OrderOfMaterialinputid=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, OrderOfMaterialinputID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{

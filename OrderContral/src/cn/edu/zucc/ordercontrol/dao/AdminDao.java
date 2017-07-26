@@ -19,6 +19,7 @@ public class AdminDao {
 			connection=DBUtil.getConnection();
 			String sql="select * from Admin where Adminid=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, AdminID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{

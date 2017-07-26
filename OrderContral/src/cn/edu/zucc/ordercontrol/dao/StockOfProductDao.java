@@ -19,6 +19,7 @@ public class StockOfProductDao implements IStockOfProductDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from StockOfProduct where StockOfProductid=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, StockOfProductID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{

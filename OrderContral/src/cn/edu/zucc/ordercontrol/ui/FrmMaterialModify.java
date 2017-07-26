@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import cn.edu.zucc.ordercontrol.dao.SupplierDao;
 import cn.edu.zucc.ordercontrol.model.Supplier;
 
-public class FrmSupplierModify extends JDialog implements ActionListener{
+public class FrmMaterialModify extends JDialog implements ActionListener{
 
 	
 	private Supplier aSupplier=null;
@@ -42,7 +42,7 @@ public class FrmSupplierModify extends JDialog implements ActionListener{
 	private JTextField edtId5 = new JTextField(20);
 	
 	
-	public FrmSupplierModify(JDialog  f, String s, boolean b,Supplier supplier) {
+	public FrmMaterialModify(JDialog  f, String s, boolean b,Supplier supplier) {
 		super(f,s,b);
 		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		toolBar.add(btnOk);

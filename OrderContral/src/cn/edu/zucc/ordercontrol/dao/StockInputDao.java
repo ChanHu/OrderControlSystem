@@ -19,6 +19,7 @@ public class StockInputDao implements IStockInputDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from StockInput where StockInputid=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, StockInputID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{

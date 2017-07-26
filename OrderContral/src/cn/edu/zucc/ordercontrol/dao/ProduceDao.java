@@ -21,6 +21,7 @@ public class ProduceDao implements IProduceDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from Supplier where Supplierid=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, ProduceID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{

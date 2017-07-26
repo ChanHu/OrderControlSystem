@@ -3,27 +3,26 @@ package cn.edu.zucc.ordercontrol.ui;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import cn.edu.zucc.ordercontrol.dao.SupplierDao;
+import cn.edu.zucc.ordercontrol.control.SupplierManager;
 import cn.edu.zucc.ordercontrol.model.Supplier;
-import cn.edu.zucc.ordercontrol.uti.BaseException;
+import cn.edu.zucc.ordercontrol.uti.BusinessException;
 
-public class FrmSupplierAdd extends JFrame implements ActionListener{
+public class FrmSupplierAdd extends JDialog implements ActionListener{
 
 	
 	private Supplier pub=null;
+	
 	
 	private JPanel toolBar = new JPanel();
 	private JPanel workPane = new JPanel();
@@ -44,8 +43,8 @@ public class FrmSupplierAdd extends JFrame implements ActionListener{
 	private JTextField edtId5 = new JTextField(20);
 	
 	
-	public FrmSupplierAdd(Frame  f, String s, boolean b) {
-		super(s);
+	public FrmSupplierAdd(JDialog  f, String s, boolean b) {
+		super(f,s,b);
 		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		toolBar.add(btnOk);
 		toolBar.add(btnCancel);
@@ -91,17 +90,19 @@ public class FrmSupplierAdd extends JFrame implements ActionListener{
 			pub.setSupplierContacts(this.edtId4.getText());
 			pub.setSupplierPhone(this.edtId5.getText());
 			pub.setSupplierBriefIntroduction(this.brief.getText());
-			
-			(new SupplierDao()).CreateSupplier(pub);
-			this.setVisible(false);
+
 			try {
-				(new FrmMain2()).reloadSupplierTable();
-			} catch (BaseException e1) {
+				(new SupplierManager()).CreateSupplier(pub);
+			} catch (BusinessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage(),"´íÎó",JOptionPane.ERROR_MESSAGE);
 			}
+			this.setVisible(false);
 		}
 	}
-	
+	public Supplier getPub() {
+		return pub;
+	}
 }
 

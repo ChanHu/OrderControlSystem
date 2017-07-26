@@ -19,6 +19,7 @@ public class StockOutputDao implements IStockOutputDao{
 			connection=DBUtil.getConnection();
 			String sql="select * from StockOutput where StockOutputid=?";
 			PreparedStatement pStatement=connection.prepareStatement(sql);
+			pStatement.setString(1, StockOutputID);
 			ResultSet rSet=pStatement.executeQuery();
 			if(rSet.next())
 			{

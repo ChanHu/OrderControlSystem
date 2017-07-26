@@ -1,15 +1,15 @@
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import cn.edu.zucc.ordercontrol.ui.FrmMain;
 import cn.edu.zucc.ordercontrol.ui.FrmMain2;
 import cn.edu.zucc.ordercontrol.uti.DBUtil;
 
 public class Starter {
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//testConnection();
+
 		new FrmMain2();
 	}
 	

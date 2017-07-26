@@ -1,6 +1,15 @@
 package cn.edu.zucc.ordercontrol.model;
 
 public class Admin {
+	public static Admin currentLoginAdmin=null;
+	
+	
+	public static Admin getCurrentLoginAdmin() {
+		return currentLoginAdmin;
+	}
+	public static void setCurrentLoginAdmin(Admin currentLoginAdmin) {
+		Admin.currentLoginAdmin = currentLoginAdmin;
+	}
 	private String AdminId;
 	private String AdminName;
 	private String AdminPasswd;
