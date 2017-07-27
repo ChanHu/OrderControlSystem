@@ -6,15 +6,18 @@ import java.util.List;
 import cn.edu.zucc.ordercontrol.model.Customer;
 
 public interface ICustomerDao {
-	//search
-	public Customer search(String CustomerID) ;
-	//loadall
-	public List<Customer> loadall() ;
-		
-	//create
-	public boolean CreateCustomer(Customer Customer) ;
-	//delete
-	public boolean deleteCustomer(Customer Customer) ;
-	//模糊查询   by name and address
-	public List<Customer> searchCustomer(String Customername,String CustomerID);
+	// search
+	public Customer search(String CustomerID);
+
+	// loadall
+	public List<Customer> loadall();
+
+	// create
+	public boolean CreateCustomer(Customer Customer);
+
+	// delete
+	public boolean deleteCustomer(Customer Customer);
+
+	// 模糊查询 by name and address
+	public List<Customer> searchCustomer(String Customername, String CustomerID);
 }

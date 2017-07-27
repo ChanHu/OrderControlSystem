@@ -3,7 +3,6 @@ package cn.edu.zucc.ordercontrol.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,17 +19,19 @@ import javax.swing.JTextField;
 
 import cn.edu.zucc.ordercontrol.dao.AdminDao;
 import cn.edu.zucc.ordercontrol.model.Admin;
-import cn.edu.zucc.ordercontrol.uti.BaseException;
-
 
 public class FrmLogin extends JDialog implements ActionListener {
-	public static Admin currentAdmin=null;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static Admin currentAdmin = null;
 	private JPanel toolBar = new JPanel();
 	private JPanel workPane = new JPanel();
 	private JButton btnLogin = new JButton("µ«¬Ω");
 	private JButton btnCancel = new JButton("»°œ˚");
 	private JButton btnRegister = new JButton("◊¢≤·");
-	
+
 	private JLabel labelUser = new JLabel("’À∫≈£∫");
 	private JLabel labelPwd = new JLabel("√‹¬Î£∫");
 	private JTextField edtUserId = new JTextField(20);
@@ -52,8 +53,7 @@ public class FrmLogin extends JDialog implements ActionListener {
 		// Â±èÂπïÂ±Ö‰∏≠ÊòæÁ§∫
 		double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 		double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-		this.setLocation((int) (width - this.getWidth()) / 2,
-				(int) (height - this.getHeight()) / 2);
+		this.setLocation((int) (width - this.getWidth()) / 2, (int) (height - this.getHeight()) / 2);
 
 		this.validate();
 
@@ -70,35 +70,33 @@ public class FrmLogin extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnLogin) {
-			String Adminid=this.edtUserId.getText();
-			String pwd=new String(this.edtPwd.getPassword());
-			
-			
-			Admin.currentLoginAdmin=(new AdminDao()).search(Adminid);
-			if((new AdminDao()).search(Adminid)==null){
-				JOptionPane.showMessageDialog(null,  "id¥ÌŒÛ","¥ÌŒÛÃ· æ",JOptionPane.ERROR_MESSAGE);
+			String Adminid = this.edtUserId.getText();
+			String pwd = new String(this.edtPwd.getPassword());
+
+			Admin.currentLoginAdmin = (new AdminDao()).search(Adminid);
+			if ((new AdminDao()).search(Adminid) == null) {
+				JOptionPane.showMessageDialog(null, "id¥ÌŒÛ", "¥ÌŒÛÃ· æ", JOptionPane.ERROR_MESSAGE);
 			}
-			if(pwd.equals((new AdminDao()).search(Adminid).getAdminPasswd())){
-				FrmLogin.currentAdmin=(new AdminDao()).search(Adminid);
+			if (pwd.equals((new AdminDao()).search(Adminid).getAdminPasswd())) {
+				FrmLogin.currentAdmin = (new AdminDao()).search(Adminid);
 				setVisible(false);
-				
+
+			} else {
+				JOptionPane.showMessageDialog(null, "√‹¬Î¥ÌŒÛ", "¥ÌŒÛÃ· æ", JOptionPane.ERROR_MESSAGE);
 			}
-			else{
-				JOptionPane.showMessageDialog(null,  "√‹¬Î¥ÌŒÛ","¥ÌŒÛÃ· æ",JOptionPane.ERROR_MESSAGE);
-			}
-			
+
 		} else if (e.getSource() == this.btnCancel) {
 			System.exit(0);
-		} else if(e.getSource()==this.btnRegister){
-			FrmRegister dlg=new FrmRegister(this,"◊¢≤·",true);
-			 Toolkit kit=Toolkit.getDefaultToolkit();//…Ë÷√∂•≤„»›∆˜øÚº‹Œ™æ”÷–
-		        Dimension screenSize=kit.getScreenSize();
-		        int width=screenSize.width;
-		        int height=screenSize.height;
-		        int x=(width-320)/2;
-		        int y=(height-140)/2;
-		    dlg.setLocation(x, y);
-		        
+		} else if (e.getSource() == this.btnRegister) {
+			FrmRegister dlg = new FrmRegister(this, "◊¢≤·", true);
+			Toolkit kit = Toolkit.getDefaultToolkit();// …Ë÷√∂•≤„»›∆˜øÚº‹Œ™æ”÷–
+			Dimension screenSize = kit.getScreenSize();
+			int width = screenSize.width;
+			int height = screenSize.height;
+			int x = (width - 320) / 2;
+			int y = (height - 140) / 2;
+			dlg.setLocation(x, y);
+
 			dlg.setVisible(true);
 		}
 	}

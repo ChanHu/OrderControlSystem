@@ -8,22 +8,21 @@ public class Starter {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//testConnection();
+		// testConnection();
 
 		new FrmMain2();
 	}
-	
-	public static void testConnection(){
-		Connection conn=null;
+
+	public static void testConnection() {
+		Connection conn = null;
 		try {
-			conn=DBUtil.getConnection();
+			conn = DBUtil.getConnection();
 			System.out.println("connected!");
 		} catch (SQLException e) {
 			System.out.println("connect failed!");
-			e.printStackTrace();	
-		}
-		finally{
-			if(conn!=null)
+			e.printStackTrace();
+		} finally {
+			if (conn != null)
 				try {
 					conn.close();
 				} catch (SQLException e) {
@@ -31,5 +30,5 @@ public class Starter {
 					e.printStackTrace();
 				}
 		}
-}
+	}
 }

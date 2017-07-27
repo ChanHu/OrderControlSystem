@@ -11,19 +11,18 @@ import cn.edu.zucc.ordercontrol.model.Admin;
 import cn.edu.zucc.ordercontrol.uti.DBUtil;
 
 public class AdminDao {
-	//search
+	// search
 	public Admin search(String AdminID) {
-		Connection connection=null;
-		Admin aAdmin=null;
+		Connection connection = null;
+		Admin aAdmin = null;
 		try {
-			connection=DBUtil.getConnection();
-			String sql="select * from Admin where Adminid=?";
-			PreparedStatement pStatement=connection.prepareStatement(sql);
+			connection = DBUtil.getConnection();
+			String sql = "select * from Admin where Adminid=?";
+			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, AdminID);
-			ResultSet rSet=pStatement.executeQuery();
-			if(rSet.next())
-			{
-				aAdmin=new Admin();
+			ResultSet rSet = pStatement.executeQuery();
+			if (rSet.next()) {
+				aAdmin = new Admin();
 				aAdmin.setAdminId(rSet.getString(1));
 				aAdmin.setAdminName(rSet.getString(2));
 				aAdmin.setAdminPasswd(rSet.getString(3));
@@ -32,129 +31,128 @@ public class AdminDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return  aAdmin;
+		return aAdmin;
 	}
-	
-	//loadall
+
+	// loadall
 	public List<Admin> loadall() {
-		Connection connection=null;
-		List<Admin> rst=new ArrayList<Admin>();
-		
-		
+		Connection connection = null;
+		List<Admin> rst = new ArrayList<Admin>();
+
 		try {
-			connection=DBUtil.getConnection();
-			String sql="select * from Admin";
-			PreparedStatement pStatement=connection.prepareStatement(sql);
-			ResultSet rSet=pStatement.executeQuery();
-			while(rSet.next())
-			{
-				Admin aAdmin=new Admin();
+			connection = DBUtil.getConnection();
+			String sql = "select * from Admin";
+			PreparedStatement pStatement = connection.prepareStatement(sql);
+			ResultSet rSet = pStatement.executeQuery();
+			while (rSet.next()) {
+				Admin aAdmin = new Admin();
 				aAdmin.setAdminId(rSet.getString(1));
 				aAdmin.setAdminName(rSet.getString(2));
 				aAdmin.setAdminPasswd(rSet.getString(3));
-			rst.add(aAdmin);
+				rst.add(aAdmin);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return rst;
 	}
-	
-	//create
+
+	// create
 	public boolean CreateAdmin(Admin Admin) {
-		
-		Connection connection=null;
-		boolean f=false;
+
+		Connection connection = null;
+		boolean f = false;
 		try {
-			connection=DBUtil.getConnection();
-			String sql="insert into Admin values(?,?,?)";
-			PreparedStatement pStatement=connection.prepareStatement(sql);
+			connection = DBUtil.getConnection();
+			String sql = "insert into Admin values(?,?,?)";
+			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, Admin.getAdminId());
 			pStatement.setString(2, Admin.getAdminName());
 			pStatement.setString(3, Admin.getAdminPasswd());
-			f=pStatement.execute();
+			f = pStatement.execute();
+			f = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return f;
 	}
-	//delete
+
+	// delete
 	public boolean deleteAdmin(Admin Admin) {
-		boolean f=false;
-		Connection connection=null;
-		
+		boolean f = false;
+		Connection connection = null;
+
 		try {
-			connection=DBUtil.getConnection();
-			String sql="delete from Admin where Adminid= ?";
-			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			connection = DBUtil.getConnection();
+			String sql = "delete from Admin where Adminid= ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, Admin.getAdminId());
-			f=preparedStatement.execute();
+			f = preparedStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return f;
 	}
-	//modify
+
+	// modify
 	public boolean modifyAdmin(Admin Admin) {
-		boolean f=false;
-		Connection  connection=null;
-		
+		boolean f = false;
+		Connection connection = null;
+
 		try {
-			connection=DBUtil.getConnection();
-			String sql="update Admin set  AdminId=?, AdminName=?, AdminPasswd=? where AdminId =? ";
-			PreparedStatement pStatement=connection.prepareStatement(sql);
+			connection = DBUtil.getConnection();
+			String sql = "update Admin set  AdminId=?, AdminName=?, AdminPasswd=? where AdminId =? ";
+			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, Admin.getAdminId());
 			pStatement.setString(2, Admin.getAdminName());
 			pStatement.setString(3, Admin.getAdminPasswd());
 			pStatement.setString(4, Admin.getAdminId());
-			f=pStatement.execute();
+			f = pStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return f;
 	}
-	//模糊查询   by name and address
-	public List<Admin> searchAdmin(String AdminId,String AdminName) {
-		List<Admin> rst=new ArrayList<Admin>();
-		Connection connection=null;
-		
+
+	// 模糊查询 by name and address
+	public List<Admin> searchAdmin(String AdminId, String AdminName) {
+		List<Admin> rst = new ArrayList<Admin>();
+		Connection connection = null;
+
 		try {
-			connection=DBUtil.getConnection();
-			String sql="select * from Admin where AdminId like ? or AdminName like ?";
-			PreparedStatement ps=connection.prepareStatement(sql);
-			if(AdminId!=null)
-			{
-				ps.setString(1, "%"+AdminId+"%");
+			connection = DBUtil.getConnection();
+			String sql = "select * from Admin where AdminId like ? or AdminName like ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			if (AdminId != null) {
+				ps.setString(1, "%" + AdminId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if(AdminName!=null)
-			{
-				ps.setString(2, "%"+AdminName+"%");
-			} else {			
+			if (AdminName != null) {
+				ps.setString(2, "%" + AdminName + "%");
+			} else {
 				ps.setString(2, "");
 			}
-			ResultSet rSet=ps.executeQuery();
-			while(rSet.next())
-			{
-				Admin aAdmin=new Admin();
+			ResultSet rSet = ps.executeQuery();
+			while (rSet.next()) {
+				Admin aAdmin = new Admin();
 				aAdmin.setAdminId(rSet.getString(1));
 				aAdmin.setAdminName(rSet.getString(2));
 				aAdmin.setAdminPasswd(rSet.getString(3));
-			rst.add(aAdmin);
+				rst.add(aAdmin);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return rst;
 	}
-}	
+}

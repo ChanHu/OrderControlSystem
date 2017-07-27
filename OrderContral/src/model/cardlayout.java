@@ -29,7 +29,7 @@ public class cardlayout extends JFrame implements ActionListener {
 		// 循环，在cardPanel面板对象中添加五个按钮
 		// 因为cardPanel面板对象为卡片布局，因此只显示最先添加的组件
 		for (int i = 0; i < 5; i++) {
-			cardPanel.add(new JButton("按钮" + i),"one");
+			cardPanel.add(new JButton("按钮" + i), "one");
 		}
 
 		// 实例化按钮对象

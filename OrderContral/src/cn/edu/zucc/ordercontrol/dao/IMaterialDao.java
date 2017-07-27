@@ -6,15 +6,18 @@ import java.util.List;
 import cn.edu.zucc.ordercontrol.model.Material;
 
 public interface IMaterialDao {
-	//search
-	public Material search(String MaterialID) ;
-	//loadall
-	public List<Material> loadall() ;
-		
-	//create
-	public boolean CreateMaterial(Material Material) ;
-	//delete
-	public boolean deleteMaterial(Material Material) ;
-	//模糊查询   by name and address
-	public List<Material> searchMaterial(String Materialname,String MaterialID);
+	// search
+	public Material search(String MaterialID);
+
+	// loadall
+	public List<Material> loadall();
+
+	// create
+	public boolean CreateMaterial(Material Material);
+
+	// delete
+	public boolean deleteMaterial(Material Material);
+
+	// 模糊查询 by name and address
+	public List<Material> searchMaterial(String Materialname, String MaterialID);
 }

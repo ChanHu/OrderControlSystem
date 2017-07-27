@@ -6,15 +6,18 @@ import java.util.List;
 import cn.edu.zucc.ordercontrol.model.StockOfProduct;
 
 public interface IStockOfProductDao {
-	//search
-	public StockOfProduct search(String StockOfProductID) ;
-	//loadall
-	public List<StockOfProduct> loadall() ;
-		
-	//create
-	public boolean CreateStockOfProduct(StockOfProduct StockOfProduct) ;
-	//delete
-	public boolean deleteStockOfProduct(StockOfProduct StockOfProduct) ;
-	//模糊查询   by name and address
-	public List<StockOfProduct> searchStockOfProduct(String StockOfProductname,String StockOfProductID);
+	// search
+	public StockOfProduct search(String StockOfProductID);
+
+	// loadall
+	public List<StockOfProduct> loadall();
+
+	// create
+	public boolean CreateStockOfProduct(StockOfProduct StockOfProduct);
+
+	// delete
+	public boolean deleteStockOfProduct(StockOfProduct StockOfProduct);
+
+	// 模糊查询 by name and address
+	public List<StockOfProduct> searchStockOfProduct(String StockOfProductname, String StockOfProductID);
 }
