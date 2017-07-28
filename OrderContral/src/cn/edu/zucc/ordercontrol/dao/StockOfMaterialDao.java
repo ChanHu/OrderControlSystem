@@ -126,21 +126,21 @@ public class StockOfMaterialDao implements IStockOfMaterialDao {
 	}
 
 	// Ä£ºý²éÑ¯ by name and address
-	public List<StockOfMaterial> searchStockOfMaterial(String MaterialId, String StockOfMaterialId) {
+	public List<StockOfMaterial> searchStockOfMaterial(String MaterialId, String StockOfMaterialIdAddress) {
 		List<StockOfMaterial> rst = new ArrayList<StockOfMaterial>();
 		Connection connection = null;
 
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "select * from StockOfMaterial where MaterialId like ? or StockOfMaterialId like ?";
+			String sql = "select * from StockOfMaterial where MaterialId like ? or StockOfMaterialAddress like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (MaterialId != null) {
+			if (MaterialId != null&&!MaterialId.equals("")) {
 				ps.setString(1, "%" + MaterialId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (StockOfMaterialId != null) {
-				ps.setString(2, "%" + StockOfMaterialId + "%");
+			if (StockOfMaterialIdAddress != null&&!StockOfMaterialIdAddress.equals("")) {
+				ps.setString(2, "%" + StockOfMaterialIdAddress + "%");
 			} else {
 				ps.setString(2, "");
 			}

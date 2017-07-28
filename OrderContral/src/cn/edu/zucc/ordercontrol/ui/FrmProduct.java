@@ -16,7 +16,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,8 +24,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
+import cn.edu.zucc.ordercontrol.control.ProductFormManager;
+import cn.edu.zucc.ordercontrol.control.ProductManager;
 import cn.edu.zucc.ordercontrol.control.ProductTypeManager;
 import cn.edu.zucc.ordercontrol.dao.ProductDao;
 import cn.edu.zucc.ordercontrol.dao.ProductTypeDao;
@@ -49,7 +48,7 @@ public class FrmProduct extends JDialog implements ActionListener {
 
 	
 	private JLabel l1= new JLabel("                产品类别");
-	private JLabel l2= new JLabel("                      产品种类");
+	private JLabel l2= new JLabel("                       产品");
 	private JLabel l3= new JLabel("                产品构成");
 	
 	private JButton btnAdd = new JButton("添加");
@@ -155,7 +154,34 @@ public class FrmProduct extends JDialog implements ActionListener {
 		jf2222.setVisible(true);
 	}
 	
-
+	public void details2(int i,int j) {
+		JDialog jf2222 = new JDialog(this, "详情", true);
+		jf2222.setSize(320, 138);
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();// 设置顶层容器框架为居中
+		Dimension screenSize = kit.getScreenSize();
+		int width = screenSize.width;
+		int height = screenSize.height;
+		int x = (width - 250) / 2;
+		int y = (height - 250) / 2;
+		jf2222.setLocation(x, y);
+		
+		JPanel contentPane222 = new JPanel();
+		contentPane222.setLayout(new BorderLayout());
+		JPanel p111 = new JPanel();
+		jf2222.setContentPane(contentPane222);
+		JTextArea brief222 = new JTextArea(5, 15);
+		brief222.setEditable(true);
+		brief222.setLineWrap(true);
+		brief222.setText(tblData2[i][j - 1].toString());
+		brief222.setSize(300, 300);
+		p111.add(brief222);
+		contentPane222.add(p111);
+		
+		jf2222.setAlwaysOnTop(true);
+		jf2222.setVisible(true);
+	}
+	
 	public FrmProduct(JDialog f, String s, boolean b) {
 		super(f, s, b);
 		
@@ -226,7 +252,8 @@ public class FrmProduct extends JDialog implements ActionListener {
 		double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 		double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		this.setLocation((int) (width - this.getWidth()) / 2, (int) (height - this.getHeight()) / 2);
-
+		
+		//details
 		this.ProductTypeTable.addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent e) {
@@ -239,19 +266,43 @@ public class FrmProduct extends JDialog implements ActionListener {
 				if (j == ProductTypeTable.getColumnCount()) {
 					details(i,j);
 				}
-				// zhanshi
-				// System.out.println(j);
-				// System.out.println(ProductTypeTable.getColumnCount());
 			}
 
 		});
 
+		//details
+		this.ProductTable.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				int i = ProductTable.getSelectedRow();
+				if (i < 0) {
+					return;
+				}
+				int j = ProductTable.getSelectedColumn();
+				j++;
+				if (j == ProductTable.getColumnCount()) {
+					details2(i,j);
+				}
+			}
+
+		});
+		
 		
 			this.validate();
 		
 		this.btnAdd.addActionListener(this);
 		this.btnModify.addActionListener(this);
 		this.btnDelete.addActionListener(this);
+		this.btnAdd2.addActionListener(this);
+		this.btnModify2.addActionListener(this);
+		this.btnDelete2.addActionListener(this);
+		this.btnAdd3.addActionListener(this);
+		this.btnModify3.addActionListener(this);
+		this.btnDelete3.addActionListener(this);
+		
+		
+		
+		
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				// System.exit(0);
@@ -267,7 +318,7 @@ public class FrmProduct extends JDialog implements ActionListener {
 		if (e.getSource() == this.btnAdd) {
 			FrmProductTypeAdd add = new FrmProductTypeAdd(this, "产品类别增加", true);
 			add.setVisible(true);
-			if (add.getReadertype() != null) {// 刷新表格
+			if (add.getProductType() != null) {// 刷新表格
 				this.reloadTypeTable();
 			}
 		} else if (e.getSource() == this.btnModify) {
@@ -285,13 +336,61 @@ public class FrmProduct extends JDialog implements ActionListener {
 			if (JOptionPane.showConfirmDialog(this, "确定删除该类别吗？", "确认",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			
-				int n = this.ProductTypeTable.getSelectedRow();
-				(new ProductTypeManager()).deleteProductType(types.get(n));
-				this.reloadTypeTable();
+			(new ProductTypeManager()).deleteProductType(types.get(i));
+			this.reloadTypeTable();
 
 			}
-		}
-	}
+		} else if (e.getSource() == this.btnAdd2) {
+			FrmProductAdd add = new FrmProductAdd(this, "产品增加", true,types);
+			add.setVisible(true);
+			if (add.getProduct() != null) {// 刷新表格
+				this.reloadProductTable();
+			}
+		} else if (e.getSource() == this.btnModify2) {
+			int i = this.ProductTable.getSelectedRow();
+			FrmProductModify add=new FrmProductModify(this, "", true, types,products.get(i));
+			add.setVisible(true);
+			if(add.getProduct()!=null)
+				this.reloadProductTable();
+		} else if (e.getSource() == this.btnDelete2) {
+			int i = this.ProductTable.getSelectedRow();
+			if (i < 0) {
+				JOptionPane.showMessageDialog(null, "请选择读者类别", "提示", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			if (JOptionPane.showConfirmDialog(this, "确定删除该类别吗？", "确认",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+		
+			(new ProductManager()).deleteProduct(products.get(i));
+			this.reloadProductTable();
+
+			}
+		} else if (e.getSource() == this.btnAdd3) {
+			FrmProductFormAdd add=new FrmProductFormAdd(this, "产品组成增加", true, products);
+			add.setVisible(true);
+			if (add.getProductForm() != null) {// 刷新表格
+				this.reloadFormTable();
+			}
+		} else if (e.getSource() == this.btnModify3) {
+			int i = this.ProductFormTable.getSelectedRow();
+			FrmProductFormModify add=new FrmProductFormModify(this, "产品组成修改", true, products, forms.get(i));
+			add.setVisible(true);
+			if(add.getProductForm()!=null)
+				this.reloadFormTable();
+		} else if (e.getSource() == this.btnDelete3) {
+			int i = this.ProductFormTable.getSelectedRow();
+			if (i < 0) {
+				JOptionPane.showMessageDialog(null, "请选择读者类别", "提示", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			if (JOptionPane.showConfirmDialog(this, "确定删除该类别吗？", "确认",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+		
+			(new ProductFormManager()).deleteform(forms.get(i));
+			this.reloadFormTable();
+
+			}
+		}  	
 }
 
-
+}

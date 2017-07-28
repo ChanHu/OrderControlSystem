@@ -126,23 +126,23 @@ public class StockOfProductDao implements IStockOfProductDao {
 	}
 
 	// Ä£ºý²éÑ¯ by name and address
-	public List<StockOfProduct> searchStockOfProduct(String StockOfProductID, String ProductId) {
+	public List<StockOfProduct> searchStockOfProduct(String StockOfProductAdress, String ProductId) {
 		List<StockOfProduct> rst = new ArrayList<StockOfProduct>();
 		Connection connection = null;
 
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "select * from StockOfProduct where StockOfProductID like ? or ProductId like ?";
+			String sql = "select * from StockOfProduct where ProductId like ? or StockOfProductAddress like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (StockOfProductID != null) {
-				ps.setString(1, "%" + StockOfProductID + "%");
-			} else {
-				ps.setString(1, "");
-			}
-			if (ProductId != null) {
-				ps.setString(2, "%" + ProductId + "%");
+			if (StockOfProductAdress != null&&!StockOfProductAdress.equals("")) {
+				ps.setString(2, "%" + StockOfProductAdress + "%");
 			} else {
 				ps.setString(2, "");
+			}
+			if (ProductId != null&&!ProductId.equals("")) {
+				ps.setString(1, "%" + ProductId + "%");
+			} else {
+				ps.setString(1, "");
 			}
 			ResultSet rSet = ps.executeQuery();
 			while (rSet.next()) {

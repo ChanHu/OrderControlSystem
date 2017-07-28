@@ -7,6 +7,15 @@ public class StockInput {
 	private String StockInputID;
 	private Date StockInputDate;
 	private String StockInputCount;
+	private boolean StockInputFinish=false;
+
+	public boolean isStockInputFinish() {
+		return StockInputFinish;
+	}
+
+	public void setStockInputFinish(boolean stockInputFinish) {
+		StockInputFinish = stockInputFinish;
+	}
 
 	public String getMaterialId() {
 		return MaterialId;

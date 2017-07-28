@@ -131,12 +131,12 @@ public class ProductTypeDao implements IProductTypeDao {
 			connection = DBUtil.getConnection();
 			String sql = "select * from ProductType where ProductTypeNamelike ? or ProductTypeID like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (ProductTypeName != null) {
+			if (ProductTypeName != null&&!ProductTypeName.equals("")) {
 				ps.setString(1, "%" + ProductTypeName + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (ProductTypeID != null) {
+			if (ProductTypeID != null&&!ProductTypeID.equals("")) {
 				ps.setString(2, "%" + ProductTypeID + "%");
 			} else {
 				ps.setString(2, "");

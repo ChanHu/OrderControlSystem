@@ -143,12 +143,12 @@ public class OrderOfProductoutputDao implements IOrderOfProductoutputDao {
 			connection = DBUtil.getConnection();
 			String sql = "select * from OrderOfProductoutput where ProductId like ? or OutputDate like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (ProductId != null) {
+			if (ProductId != null&&!ProductId.equals("")) {
 				ps.setString(1, "%" + ProductId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (OutputDate != null) {
+			if (OutputDate != null&&!OutputDate.equals("")) {
 				ps.setString(2, "%" + OutputDate + "%");
 			} else {
 				ps.setString(2, "");

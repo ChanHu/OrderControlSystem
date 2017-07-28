@@ -7,6 +7,15 @@ public class Produce {
 	private String ProductId;
 	private Date ProduceDate;
 	private String ProduceCount;
+	private boolean ProduceFinish=false;
+	
+	public boolean isProduceFinish() {
+		return ProduceFinish;
+	}
+
+	public void setProduceFinish(boolean produceFinish) {
+		ProduceFinish = produceFinish;
+	}
 
 	public String getProduceId() {
 		return ProduceId;

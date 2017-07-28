@@ -2,6 +2,7 @@
 package cn.edu.zucc.ordercontrol.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,11 +48,11 @@ public class StockInputDao implements IStockInputDao {
 			ResultSet rSet = pStatement.executeQuery();
 			while (rSet.next()) {
 				StockInput aStockInput = new StockInput();
-				aStockInput.setStockInputID(rSet.getString(1));
 				aStockInput.setMaterialId(rSet.getString(1));
 				aStockInput.setStockInputID(rSet.getString(2));
 				aStockInput.setStockInputDate(rSet.getDate(3));
 				aStockInput.setStockInputCount(rSet.getString(4));
+				aStockInput.setStockInputFinish(rSet.getBoolean(5));
 				rst.add(aStockInput);
 			}
 		} catch (SQLException e) {
@@ -69,12 +70,13 @@ public class StockInputDao implements IStockInputDao {
 		boolean f = false;
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "insert into StockInput values(?,?,?,?)";
+			String sql = "insert into StockInput values(?,?,?,?,?)";
 			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, StockInput.getMaterialId());
 			pStatement.setString(2, StockInput.getStockInputID());
-			pStatement.setDate(3, StockInput.getStockInputDate());
+			pStatement.setDate(3, null);
 			pStatement.setString(4, StockInput.getStockInputCount());
+			pStatement.setBoolean(5, false);
 			f = pStatement.execute();
 			f = true;
 		} catch (SQLException e) {
@@ -107,17 +109,21 @@ public class StockInputDao implements IStockInputDao {
 	public boolean modifyStockInput(StockInput StockInput) {
 		boolean f = false;
 		Connection connection = null;
-
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "update StockInput set MaterialId=?,StockInputID=?, StockInputDate=?, StockInputCount=? where StockInputID =? ";
+			String sql = "update StockInput set MaterialId=?,StockInputID=?,StockInputDate=?, StockInputCount=? ,StockInputFinish =? where StockInputID =? ";
 			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, StockInput.getMaterialId());
 			pStatement.setString(2, StockInput.getStockInputID());
-			pStatement.setDate(3, StockInput.getStockInputDate());
+			pStatement.setDate(3, new Date(System.currentTimeMillis()));
 			pStatement.setString(4, StockInput.getStockInputCount());
-			pStatement.setString(5, StockInput.getMaterialId());
+			pStatement.setBoolean(5, StockInput.isStockInputFinish());
+			System.out.println(StockInput.isStockInputFinish());
+			System.out.println(StockInput.getStockInputID());
+			pStatement.setString(6, StockInput.getStockInputID());
 			f = pStatement.execute();
+			pStatement.close();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,12 +141,12 @@ public class StockInputDao implements IStockInputDao {
 			connection = DBUtil.getConnection();
 			String sql = "select * from StockInput where MaterialId like ? or StockInputID like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (MaterialId != null) {
+			if (MaterialId != null&&!MaterialId.equals("")) {
 				ps.setString(1, "%" + MaterialId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (StockInputID != null) {
+			if (StockInputID != null&&!StockInputID.equals("")) {
 				ps.setString(2, "%" + StockInputID + "%");
 			} else {
 				ps.setString(2, "");
@@ -152,6 +158,7 @@ public class StockInputDao implements IStockInputDao {
 				aStockInput.setStockInputID(rSet.getString(2));
 				aStockInput.setStockInputDate(rSet.getDate(3));
 				aStockInput.setStockInputCount(rSet.getString(4));
+				aStockInput.setStockInputFinish(rSet.getBoolean(5));
 				rst.add(aStockInput);
 			}
 		} catch (SQLException e) {

@@ -7,6 +7,15 @@ public class StockOutput {
 	private String StockOutputID;
 	private Date StockOutputDate;
 	private String StockOutputCount;
+	private boolean StockOutputFinish=false;
+	
+	public boolean isStockOutputFinish() {
+		return StockOutputFinish;
+	}
+
+	public void setStockOutputFinish(boolean stockOutputFinish) {
+		StockOutputFinish = stockOutputFinish;
+	}
 
 	public String getProductId() {
 		return ProductId;

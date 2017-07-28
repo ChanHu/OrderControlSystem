@@ -139,12 +139,12 @@ public class OrderOfMaterialinputDao implements IOrderOfMaterialinputDao {
 			connection = DBUtil.getConnection();
 			String sql = "select * from OrderOfMaterialinput where MaterialId like ? or OrderOfMaterialinputID like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (MaterialId != null) {
+			if (MaterialId != null&&!MaterialId.equals("")) {
 				ps.setString(1, "%" + MaterialId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (OrderOfMaterialinputID != null) {
+			if (OrderOfMaterialinputID != null&&!OrderOfMaterialinputID.equals("")) {
 				ps.setString(2, "%" + OrderOfMaterialinputID + "%");
 			} else {
 				ps.setString(2, "");

@@ -30,7 +30,7 @@ public class ProductFormManager {
 		return aDao.modifyProductform(Productform);
 	}
 
-	public boolean deleteSupplier(Productform Productform) {
+	public boolean deleteform(Productform Productform) {
 		return aDao.deleteProductform(Productform); // delete
 	}
 
@@ -38,7 +38,7 @@ public class ProductFormManager {
 		return aDao.search(Productform.getProductId());
 	}
 
-	public List<Productform> searchSupplier(String productid, String materialid) {
+	public List<Productform> searchform(String productid, String materialid) {
 		return aDao.searchProductform(productid, materialid);
 	}
 }

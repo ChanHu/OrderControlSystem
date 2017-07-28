@@ -17,7 +17,7 @@ public class ProduceDao implements IProduceDao {
 		Produce aProduce = null;
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "select * from Supplier where Supplierid=?";
+			String sql = "select * from Produce where Produceid=?";
 			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, ProduceID);
 			ResultSet rSet = pStatement.executeQuery();
@@ -42,7 +42,7 @@ public class ProduceDao implements IProduceDao {
 
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "select * from Supplier";
+			String sql = "select * from Produce";
 			PreparedStatement pStatement = connection.prepareStatement(sql);
 			ResultSet rSet = pStatement.executeQuery();
 			while (rSet.next()) {
@@ -52,6 +52,7 @@ public class ProduceDao implements IProduceDao {
 				aProduce.setProductId(rSet.getString(2));
 				aProduce.setProduceDate(rSet.getDate(3));
 				aProduce.setProduceCount(rSet.getString(4));
+				aProduce.setProduceFinish(rSet.getBoolean(5));
 				rst.add(aProduce);
 			}
 		} catch (SQLException e) {
@@ -69,12 +70,13 @@ public class ProduceDao implements IProduceDao {
 		boolean f = false;
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "insert into Supplier values(?,?,?,?)";
+			String sql = "insert into Produce values(?,?,?,?,?)";
 			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, Produce.getProduceId());
 			pStatement.setString(2, Produce.getProductId());
 			pStatement.setDate(3, Produce.getProduceDate());
 			pStatement.setString(4, Produce.getProduceCount());
+			pStatement.setBoolean(5, false);
 			f = pStatement.execute();
 			f = true;
 		} catch (SQLException e) {
@@ -91,7 +93,7 @@ public class ProduceDao implements IProduceDao {
 
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "delete from Supplier where Supplierid= ?";
+			String sql = "delete from Produce where Produceid= ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, Produce.getProduceId());
 			f = preparedStatement.execute();
@@ -104,19 +106,20 @@ public class ProduceDao implements IProduceDao {
 	}
 
 	// modify
-	public boolean modifyProduce(Produce Produce) {
+	public boolean modifyProduce(Produce produce) {
 		boolean f = false;
 		Connection connection = null;
 
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "update Supplier set ProduceId=?,ProductId=?, ProduceDate=?, ProduceCount=?,where ProduceId =? ";
+			String sql = "update Produce set ProduceId=?,ProductId=?, ProduceDate=?, ProduceCount=?,ProduceFinish=? where ProduceId =? ";
 			PreparedStatement pStatement = connection.prepareStatement(sql);
-			pStatement.setString(1, Produce.getProduceId());
-			pStatement.setString(2, Produce.getProductId());
-			pStatement.setDate(3, Produce.getProduceDate());
-			pStatement.setString(4, Produce.getProduceCount());
-			pStatement.setString(5, Produce.getProduceId());
+			pStatement.setString(1, produce.getProduceId());
+			pStatement.setString(2, produce.getProductId());
+			pStatement.setDate(3, produce.getProduceDate());
+			pStatement.setString(4, produce.getProduceCount());
+			pStatement.setBoolean(5, produce.isProduceFinish());
+			pStatement.setString(6, produce.getProduceId());
 			f = pStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -133,14 +136,14 @@ public class ProduceDao implements IProduceDao {
 
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "select * from Supplier where Suppliername like ? or Supplieraddress like ?";
+			String sql = "select * from Produce where ProduceId like ? or ProductId like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (ProduceId != null) {
+			if (ProduceId != null&&!ProduceId.equals("")) {
 				ps.setString(1, "%" + ProduceId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (ProductId != null) {
+			if (ProductId != null&&!ProductId.equals("")) {
 				ps.setString(2, "%" + ProductId + "%");
 			} else {
 				ps.setString(2, "");
@@ -153,6 +156,7 @@ public class ProduceDao implements IProduceDao {
 				aProduce.setProductId(rSet.getString(2));
 				aProduce.setProduceDate(rSet.getDate(3));
 				aProduce.setProduceCount(rSet.getString(4));
+				aProduce.setProduceFinish(rSet.getBoolean(5));
 				rst.add(aProduce);
 			}
 		} catch (SQLException e) {

@@ -87,9 +87,10 @@ public class ProductformDao implements IProductformDao {
 
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "delete from Productform where Productid= ?";
+			String sql = "delete from Productform where Productid= ? and Materialid = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, Productform.getProductId());
+			preparedStatement.setString(2, Productform.getMaterialId());
 			f = preparedStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -130,12 +131,12 @@ public class ProductformDao implements IProductformDao {
 			connection = DBUtil.getConnection();
 			String sql = "select * from Productform where ProductId like ? or MaterialId like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (ProductId != null) {
+			if (ProductId != null&&!ProductId.equals("")) {
 				ps.setString(1, "%" + ProductId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (MaterialId != null) {
+			if (MaterialId != null&&!MaterialId.equals("")) {
 				ps.setString(2, "%" + MaterialId + "%");
 			} else {
 				ps.setString(2, "");

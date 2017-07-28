@@ -51,6 +51,7 @@ public class StockOutputDao implements IStockOutputDao {
 				aStockOutput.setStockOutputID(rSet.getString(2));
 				aStockOutput.setStockOutputDate(rSet.getDate(3));
 				aStockOutput.setStockOutputCount(rSet.getString(4));
+				aStockOutput.setStockOutputFinish(rSet.getBoolean(5));
 				rst.add(aStockOutput);
 			}
 		} catch (SQLException e) {
@@ -68,12 +69,13 @@ public class StockOutputDao implements IStockOutputDao {
 		boolean f = false;
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "insert into StockOutput values(?,?,?,?)";
+			String sql = "insert into StockOutput values(?,?,?,?,?)";
 			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, StockOutput.getProductId());
 			pStatement.setString(2, StockOutput.getStockOutputID());
 			pStatement.setDate(3, StockOutput.getStockOutputDate());
 			pStatement.setString(4, StockOutput.getStockOutputCount());
+			pStatement.setBoolean(5, false);
 			f = pStatement.execute();
 			f = true;
 		} catch (SQLException e) {
@@ -109,13 +111,14 @@ public class StockOutputDao implements IStockOutputDao {
 
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "update StockOutput set ProductId=?,StockOutputID=?, StockOutputDate=?, StockOutputCount=? where StockOutputID =? ";
+			String sql = "update StockOutput set ProductId=?,StockOutputID=?, StockOutputDate=?, StockOutputCount=?,StockOutputFinish=? where StockOutputID =? ";
 			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, StockOutput.getProductId());
 			pStatement.setString(2, StockOutput.getStockOutputID());
 			pStatement.setDate(3, StockOutput.getStockOutputDate());
 			pStatement.setString(4, StockOutput.getStockOutputCount());
-			pStatement.setString(5, StockOutput.getStockOutputID());
+			pStatement.setBoolean(5, StockOutput.isStockOutputFinish());
+			pStatement.setString(6, StockOutput.getStockOutputID());
 			f = pStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -134,12 +137,12 @@ public class StockOutputDao implements IStockOutputDao {
 			connection = DBUtil.getConnection();
 			String sql = "select * from StockOutput where ProductId like ? or StockOutputID like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (ProductId != null) {
+			if (ProductId != null&&!ProductId.equals("")) {
 				ps.setString(1, "%" + ProductId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (StockOutputID != null) {
+			if (StockOutputID != null&&!StockOutputID.equals("")) {
 				ps.setString(2, "%" + StockOutputID + "%");
 			} else {
 				ps.setString(2, "");
@@ -151,6 +154,7 @@ public class StockOutputDao implements IStockOutputDao {
 				aStockOutput.setStockOutputID(rSet.getString(2));
 				aStockOutput.setStockOutputDate(rSet.getDate(3));
 				aStockOutput.setStockOutputCount(rSet.getString(4));
+				aStockOutput.setStockOutputFinish(rSet.getBoolean(5));
 				rst.add(aStockOutput);
 			}
 		} catch (SQLException e) {

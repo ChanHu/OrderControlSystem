@@ -112,7 +112,7 @@ public class ProductDao implements IProductDao {
 
 		try {
 			connection = DBUtil.getConnection();
-			String sql = "update Product set ProductId=?,ProductTypeID=?, ProductName=?, ProductPrice=?, getProductIntroduction=? where ProductId =? ";
+			String sql = "update Product set ProductId=?,ProductTypeID=?, ProductName=?, ProductPrice=?, ProductIntroduction=? where ProductId =? ";
 			PreparedStatement pStatement = connection.prepareStatement(sql);
 			pStatement.setString(1, Product.getProductId());
 			pStatement.setString(2, Product.getProductTypeID());
@@ -138,12 +138,12 @@ public class ProductDao implements IProductDao {
 			connection = DBUtil.getConnection();
 			String sql = "select * from Product where ProductId like ? or ProductName like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (ProductId != null) {
+			if (ProductId != null&&!ProductId.equals("")) {
 				ps.setString(1, "%" + ProductId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (ProductName != null) {
+			if (ProductName != null&&!ProductName.equals("")) {
 				ps.setString(2, "%" + ProductName + "%");
 			} else {
 				ps.setString(2, "");

@@ -130,12 +130,12 @@ public class AdminDao {
 			connection = DBUtil.getConnection();
 			String sql = "select * from Admin where AdminId like ? or AdminName like ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			if (AdminId != null) {
+			if (AdminId != null&&!AdminId.equals("")) {
 				ps.setString(1, "%" + AdminId + "%");
 			} else {
 				ps.setString(1, "");
 			}
-			if (AdminName != null) {
+			if (AdminName != null&&!AdminName.equals("")) {
 				ps.setString(2, "%" + AdminName + "%");
 			} else {
 				ps.setString(2, "");

@@ -47,12 +47,11 @@ public class FrmMain2 extends JDialog implements ActionListener {
 
 	private JButton Button_Customer = new JButton("消费者");
 
-	private JButton Button_Input = new JButton("采购");
-	private JButton Button_Output = new JButton("出售");
-	private JButton Button_Produce = new JButton("生产");
+	private JButton Button_Input = new JButton("综合处理");
+	private JButton Button_Input2 = new JButton("历年出售");
 
-	private JButton Button_order = new JButton("订单查询");
-	private JButton Button_Stock = new JButton("库存查询");
+	private JButton Button_order = new JButton("总计");
+
 
 	JButton button_Function_add = new JButton("增加");
 	JButton button_Function_modify = new JButton("修改");
@@ -101,6 +100,10 @@ public class FrmMain2 extends JDialog implements ActionListener {
 		this.dataTable.repaint();
 	}
 
+
+	
+	
+	
 	void reloadMaterialTable() throws BaseException {
 		if (text1.getText().equals("MaterialId"))
 			text1.setText("");
@@ -204,11 +207,9 @@ public class FrmMain2 extends JDialog implements ActionListener {
 		p1.add(Button_Product);
 		p1.add(new JLabel("                       生产管理"));
 		p1.add(Button_Input);
-		p1.add(Button_Output);
-		p1.add(Button_Produce);
+		p1.add(Button_Input2);
 		p1.add(new JLabel("                       查询统计"));
 		p1.add(Button_order);
-		p1.add(Button_Stock);
 		contentPane.add(p1, "North");
 		// jf.pack();
 
@@ -255,10 +256,9 @@ public class FrmMain2 extends JDialog implements ActionListener {
 		Button_Product.addActionListener(this);
 		Button_Customer.addActionListener(this);
 		Button_Input.addActionListener(this);
-		Button_Output.addActionListener(this);
+		Button_Input2.addActionListener(this);
 		Button_order.addActionListener(this);
-		Button_Stock.addActionListener(this);
-		Button_Produce.addActionListener(this);
+
 		button_Function_add.addActionListener(this);
 		button_Function_delete.addActionListener(this);
 		button_Function_modify.addActionListener(this);
@@ -347,14 +347,18 @@ public class FrmMain2 extends JDialog implements ActionListener {
 				e1.printStackTrace();
 			}
 		} else if (e.getSource() == this.Button_Input) {
-			flag = "Input";
-		} else if (e.getSource() == this.Button_Output) {
-			flag = "OutPut";
-		} else if (e.getSource() == this.Button_order) {
-			flag = "Order";
-		} else if (e.getSource() == this.Button_Stock) {
-			flag = "Stock";
-		} else if (e.getSource() == this.button_Function_add) {
+			Frminput add= new Frminput(this, "采购管理", true);
+			add.setVisible(true);
+			
+		} else if (e.getSource() == this.Button_Input2) {
+//			Frminput add= new Frminput(this, "采购管理", true);
+//			add.setVisible(true);
+			
+		}  else if (e.getSource() == this.Button_order) {
+//			Frminput add= new Frminput(this, "采购管理", true);
+//			add.setVisible(true);
+			
+		}  else if (e.getSource() == this.button_Function_add) {
 			if (flag.equals("Supplier")) {
 				FrmSupplierAdd aFrmSupplier = new FrmSupplierAdd(this, "增加供货商", true);
 				aFrmSupplier.setVisible(true);
@@ -388,15 +392,7 @@ public class FrmMain2 extends JDialog implements ActionListener {
 						e1.printStackTrace();
 					}
 				}
-			} else if (flag.equals("Input")) {
-
-			} else if (flag.equals("OutPut")) {
-
-			} else if (flag.equals("Order")) {
-
-			} else if (flag.equals("Stock")) {
-
-			}
+			}  
 
 		} else if (e.getSource() == this.button_Function_delete) {
 			if (flag.equals("Supplier")) {
@@ -427,15 +423,7 @@ public class FrmMain2 extends JDialog implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			} else if (flag.equals("Input")) {
-
-			} else if (flag.equals("OutPut")) {
-
-			} else if (flag.equals("Order")) {
-
-			} else if (flag.equals("Stock")) {
-
-			}
+			} 
 		} else if (e.getSource() == this.button_Function_modify) {
 			if (flag.equals("Supplier")) {
 				int i = FrmMain2.this.dataTable.getSelectedRow();
@@ -477,15 +465,7 @@ public class FrmMain2 extends JDialog implements ActionListener {
 						e1.printStackTrace();
 					}
 				}
-			} else if (flag.equals("Input")) {
-
-			} else if (flag.equals("OutPut")) {
-
-			} else if (flag.equals("Order")) {
-
-			} else if (flag.equals("Stock")) {
-
-			}
+			}  
 		} else if (e.getSource() == this.button_Function_search) {
 			if (flag.equals("Supplier")) {
 				try {
@@ -508,15 +488,7 @@ public class FrmMain2 extends JDialog implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			} else if (flag.equals("Input")) {
-
-			} else if (flag.equals("OutPut")) {
-
-			} else if (flag.equals("Order")) {
-
-			} else if (flag.equals("Stock")) {
-
-			}
+			} 
 		}
 	}
 }

@@ -30,8 +30,8 @@ public class FrmProductTypeAdd extends JDialog implements ActionListener {
 	private JLabel labelbrief = new JLabel("Àà±ð¼ò½é£º");
 
 	
-	private JTextField edtid = new JTextField(20);
-	private JTextField edtname = new JTextField(20);
+	private JTextField edtid = new JTextField(16);
+	private JTextField edtname = new JTextField(16);
 	private JTextArea brief = new JTextArea();
 
 	public FrmProductTypeAdd(JDialog f, String s, boolean b) {
@@ -85,7 +85,7 @@ public class FrmProductTypeAdd extends JDialog implements ActionListener {
 
 	}
 
-	public ProductType getReadertype() {
+	public ProductType getProductType() {
 		return productType;
 	}
 }
